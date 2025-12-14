@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotecas de Andalucía</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Header con imagen de fondo */
+.header-image {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Navegación */
+nav {
+    background-color: #7fa8c4;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Botón hamburguesa (oculto en desktop) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 15px 20px;
+}
+
+#menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu_prov {
+    position: relative;
+}
+
+.enlace {
+    display: block;
+    padding: 15px 25px;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.enlace:hover,
+.enlace.active {
+    background-color: #5a8aa3;
+    color: white;
+    border-color: #2d2d2d;
+}
+
+/* Submenú desplegable */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #d8e5ed;
+    list-style: none;
+    min-width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    border: 2px solid #4a6b7f;
+    border-top: none;
+    z-index: 999;
+}
+
+.menu_prov:hover .submenu {
+    display: block;
+}
+
+.submenu li {
+    border-bottom: 1px solid #b0c4d0;
+}
+
+.submenu li:last-child {
+    border-bottom: none;
+}
+
+.submenu a {
+    display: block;
+    padding: 12px 20px;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.submenu a:hover {
+    background-color: #9bb9cf;
+    color: #1a1a1a;
+}
+
+/* RESPONSIVE - Tablets (menos de 900px) */
+@media (max-width: 900px) {
+    .header-image {
+        height: 200px;
+        font-size: 2em;
+    }
+    
+    .enlace {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+}
+
+/* RESPONSIVE - Móviles (menos de 768px) */
+@media (max-width: 768px) {
+    .header-image {
+        height: 150px;
+        font-size: 1.5em;
+    }
+    
+    /* Mostrar botón hamburguesa */
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Menú oculto por defecto en móvil */
+    #menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    /* Mostrar menú cuando está activo */
+    #menu.active {
+        display: flex;
+    }
+    
+    .menu_prov {
+        width: 100%;
+        border-bottom: 1px solid #5a8aa3;
+    }
+    
+    .enlace {
+        padding: 15px 20px;
+        font-size: 16px;
+        text-align: left;
+    }
+    
+    /* Submenú en móvil */
+    .submenu {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        background-color: #9bb9cf;
+    }
+    
+    .menu_prov:hover .submenu {
+        display: none;
+    }
+    
+    /* Mostrar submenú al hacer clic */
+    .menu_prov.active .submenu {
+        display: block;
+    }
+    
+    .submenu a {
+        padding-left: 40px;
+        font-size: 14px;
+    }
+}
+
+/* RESPONSIVE - Móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+    .header-image {
+        height: 120px;
+        font-size: 1.2em;
+    }
+    
+    .enlace {
+        font-size: 15px;
+        padding: 12px 15px;
+    }
+    
+    .submenu a {
+        padding-left: 30px;
+        font-size: 13px;
+    }
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Tarjeta de biblioteca */
+.biblioteca-card {
+    background: linear-gradient(to bottom, 
+        #a8c4d8 0%, 
+        #d8e5ed 50px, 
+        #f0f0f0 50px);
+    border: 2px solid #4a6b7f;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.nombre-biblioteca {
+    background-color: #d8e5ed;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.8em;
+    color: #1a1a1a;
+    border-bottom: 2px solid #4a6b7f;
+}
+
+.imagen-biblioteca {
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ccc;
+    margin: 20px 0;
+}
+
+.seccion-historia {
+    background-color: #7fa8c4;
+    padding: 15px 25px;
+    margin: 20px;
+    border-radius: 5px;
+    color: #1a1a1a;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.texto-historia {
+    padding: 20px;
+    line-height: 1.8;
+    color: #1a1a1a;
+}
+
+.seccion-info {
+    background-color: #9bb9cf;
+    padding: 20px 25px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.seccion-info ul {
+    list-style: none;
+}
+
+.seccion-info li {
+    padding: 5px 0;
+    color: #1a1a1a;
+    font-size: 0.95em;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    align-items: center;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    background-color: #4a6b7f;
+}
+
+@media (max-width: 768px) {
+    .nombre-biblioteca {
+        font-size: 1.4em;
+        padding: 15px;
+    }
+    
+    .imagen-biblioteca {
+        height: 250px;
+    }
+    
+    .seccion-historia {
+        font-size: 1.1em;
+        padding: 12px 20px;
+        margin: 15px;
+    }
+    
+    .texto-historia {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+    
+    .seccion-info {
+        padding: 15px 20px;
+        margin: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- Header con imagen -->
+<img class="header-image"src="interior-acogedor-de-estilo-anime-con-muebles.jpg" alt="">
+
+<!-- Navegación -->
+<nav>
+    <!-- Botón hamburguesa para móvil -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    
+    <ul id="menu">
+        <li class="menu_prov">
+            <a class="enlace" href="#almeria">Almería</a>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#cadiz">Cádiz</a>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace active" href="#cordoba" onclick="toggleSubmenu(event)">Córdoba</a>
+            <ul class="submenu">
+                <li><a href="#bib-cordoba">Biblioteca Pública del Estado Córdoba</a></li>
+            </ul>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#granada" onclick="toggleSubmenu(event)">Granada</a>
+            <ul class="submenu">
+                <li><a href="#bib-granada">Centro de Documentación Musical de Andalucía</a></li>
+            </ul>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#huelva">Huelva</a>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#jaen">Jaén</a>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#malaga" onclick="toggleSubmenu(event)">Málaga</a>
+            <ul class="submenu">
+                <li><a href="#bib-malaga">Biblioteca Provincial de Málaga</a></li>
+            </ul>
+        </li>
+        <li class="menu_prov">
+            <a class="enlace" href="#sevilla">Sevilla</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Contenedor principal -->
+<div class="container">
+    
+    <!-- Tarjeta de Biblioteca Provincial de Málaga -->
+    <div class="biblioteca-card" id="bib-malaga">
+        <h1 class="nombre-biblioteca">Biblioteca Provincial de Málaga</h1>
+
+        <img class="imagen-biblioteca" src="WhatsApp Image 2025-11-03 at 20.09.08.jpeg" alt="">
+        
+        <h3 class="seccion-historia">Historia de la biblioteca</h3>
+        
+        
+        <div class="texto-historia">
+            <p>La Biblioteca Pública de Málaga se originó tras la desamortización eclesiástica de Mendizábal (1835), cuando los bienes del clero fueron confiscados y los fondos bibliográficos se destinaron a bibliotecas provinciales y universitarias. Inicialmente, estuvo situada en el Instituto de Enseñanza Media.</p>
+            <br>
+            <p>En 1895, por Real Orden, se estableció que fuera servida por el Cuerpo Facultativo, siendo su primer director Lope Barrón y Ochoa (1895-1918), seguido por el poeta Salvador Rueda Santos (1919-1924).</p>
+            <br>
+            <p>En 1933, la biblioteca se trasladó a un local en la Alameda Principal, adoptando el nombre de Biblioteca Popular Ricardo de Orueta, y en 1937 pasó a llamarse Biblioteca Pública Cervantes. En 1939, se documentó su mal estado y el traslado de fondos históricos a Alcalá de Henares.</p>
+            <br>
+            <p>En 1940, el arquitecto Luis Moya Blanco diseñó un nuevo edificio para albergar la Biblioteca y el Archivo. La Casa de Cultura se inauguró en 1956, integrando 8.000 volúmenes procedentes de antiguos conventos.</p>
+            <br>
+            <p>Durante obras en el jardín se hallaron restos arqueológicos que condujeron al descubrimiento del Teatro Romano de Málaga. Por ello, en 1994, la Biblioteca fue trasladada a un edificio provisional en Avenida de Europa, bajo la gestión de la Junta de Andalucía (transferida en 1984).</p>
+            <br>
+            <p>Finalmente, en 2019, el ministro José Guirao anunció el nuevo proyecto para su sede definitiva en el convento de San Agustín, diseñado por el arquitecto Luis Arranz. Las obras comenzaron en 2022 y su finalización está prevista para 2026.</p>
+        </div>
+        
+        <div class="seccion-info">
+            <ul>
+                <li><strong>-Horario de la biblioteca:</strong></li>
+                <li>Lunes a Viernes: 09:00-21:00</li>
+                <li>Sábado: 9:00-14:00</li>
+                <li>Domingo: Cerrado</li>
+                <li><strong>-Días de apertura:</strong> Lunes a Sábado</li>
+                <li><strong>-Dirección:</strong> Av. Europa, 49, Carretera de Cádiz</li>
+                <li><strong>-Teléfono:</strong> 951920530</li>
+                <li><strong>-Fax:</strong> -</li>
+                <li><strong>-Correo electrónico:</strong> informacion.bp.ma.ccul@juntadeandalucia.es</li>
+            </ul>
+        </div>
+        
+        <div class="social-icons">
+            <a href="https://www.facebook.com/people/Biblioteca-de-M%C3%A1laga/100075704457675/#" class="social-icon" title="Facebook">f</a>
+            <a href="https://www.instagram.com/bibliomalaga/?hl=es" class="social-icon" title="Instagram">@</a>
+        </div>
+    </div>
+    
+    <br><br>
+    
+    <!-- Tarjeta de Biblioteca Municipal Alameda -->
+    <div class="biblioteca-card" id="bib-alameda">
+        <h1 class="nombre-biblioteca">Biblioteca Pública Municipal Alameda</h1>
+        
+        <img class="imagen-biblioteca" src="Biblioteca_Publica_Municipal_Almadena.jpg" alt="">
+        
+        <div class="seccion-info">
+            <ul>
+                <li><strong>-Horario de la biblioteca:</strong></li>
+                <li>Lunes a Viernes: 16:00-20:00</li>
+                <li>Sábado y Domingo: Cerrado</li>
+                <li><strong>-Días de apertura:</strong> Lunes a Viernes</li>
+                <li><strong>-Dirección:</strong> C/ Enmedio, 46, Distrito Centro</li>
+                <li><strong>-Teléfono:</strong> 951192251</li>
+                <li><strong>-Correo electrónico:</strong> bibliotecalameda@hotmail.com</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <br><br>
+    
+    <!-- Tarjeta de Centro de Documentación Musical -->
+    <div class="biblioteca-card" id="bib-granada">
+        <h1 class="nombre-biblioteca">Centro de Documentación Musical de Andalucía</h1>      
+        
+        <img class="imagen-biblioteca" src="CentroDeDocumentacionMusicalDeAndalucia.jpg" alt="">
+        
+        <h3 class="seccion-historia">
+            Historia de la biblioteca
+        </h3>
+        
+        <div class="texto-historia">
+            <p>El Centro de Documentación Musical de Andalucía (CDMA), es un organismo creado en 1987 por la Consejería de Cultura de la Junta de Andalucía con el fin de recuperar, custodiar, catalogar, clasificar y difundir el patrimonio musical creado o relacionado con Andalucía en todas sus formas.</p>
+        </div>
+        
+        <div class="seccion-info">
+            <ul>
+                <li><strong>-Horario de la biblioteca:</strong></li>
+                <li>Lunes a Viernes: 9:00-14:00</li>
+                <li>Sábado y Domingo: Cerrado</li>
+                <li><strong>-Días de apertura:</strong> Lunes a Viernes</li>
+                <li><strong>-Dirección:</strong> Carrera del Darro, 29, Albaicín</li>
+                <li><strong>-Teléfono:</strong> 958031644</li>
+                <li><strong>-Correo electrónico:</strong> informacion.cdma.ccul@juntadeandalucia.es</li>
+            </ul>
+        </div>
+        
+        <div class="social-icons">
+            <a href="https://www.facebook.com/DocumentacionMusicalAndalucia" class="social-icon" title="Facebook">f</a>
+            <a href="https://x.com/CDMAndalucia" class="social-icon" title="Twitter">𝕏</a>
+        </div>
+    </div>
+    
+    <br><br>
+    
+    <!-- Tarjeta de Biblioteca Pública del Estado - Córdoba -->
+    <div class="biblioteca-card" id="bib-cordoba">
+        
+        <h1 class="nombre-biblioteca">Biblioteca Pública del Estado - Córdoba</h1> 
+        
+        <img class="imagen-biblioteca" src="Biblioteca_Publica_Del_Estado_Cordoba.jpg" alt="">
+        
+        <h1 class="seccion-historia">Historia de la biblioteca</h1>
+        
+        <p class="texto-historia">Desde su creación, la historia de la biblioteca ha estado marcada por la provisionalidad de su ubicación. Abrió sus puertas al público por primera vez en 1850 en el edificio de la Diputación Provincial, situado en la calle Carreteras. Entre 1864 y 1878 estuvo emplazada en la Plaza del Potro, y a lo largo del siglo XX sufrió diversos traslados, siempre de carácter provisional. Entre sus sedes, cabe destacar la situada en la calle Amador de los Ríos, junto al Palacio Episcopal, donde permaneció desde 1984 hasta febrero de 2024. En esa fecha, la biblioteca se trasladó definitivamente a su actual sede, un edificio de nueva construcción ubicado en los Jardines de la Agricultura.</p>
+        
+        
+        <div class="seccion-info">
+            <ul>
+                <li><strong>-Horario de la biblioteca:</strong></li>
+                <li>Lunes a Viernes: 9:00-14:00</li>
+                <li>Sábado y Domingo: Cerrado</li>
+                <li><strong>-Días de apertura:</strong> Lunes a Viernes</li>
+                <li><strong>-Dirección:</strong> Avda. América, s/n</li>
+                <li><strong>-Teléfono:</strong> 95735500</li>
+                <li><strong>-Fax:</strong> 957.355.499</li>
+                <li><strong>-Correo electrónico:</strong> informacion.bp.co.ccul@juntadeandalucia.es</li>
+            </ul>
+        </div>
+        
+        <div class="social-icons">
+            <a href="https://www.facebook.com/BibliotecaPublicaProvincialdeCordoba/" class="social-icon" title="Facebook">f</a>
+            <a href="https://x.com/BibCordoba" class="social-icon" title="Twitter">𝕏</a>
+            <a href="https://www.instagram.com/bibcordoba/" class="social-icon" title="Instagram">@</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Toggle menú hamburguesa
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('active');
+}
+
+// Toggle submenú en móvil
+function toggleSubmenu(e) {
+    if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const parent = e.target.closest('.menu_prov');
+        parent.classList.toggle('active');
+    }
+}
+
+// Cerrar menú al hacer clic en un enlace (móvil)
+document.querySelectorAll('.submenu a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            document.getElementById('menu').classList.remove('active');
+        }
+    });
+});
+
+// Activar enlace actual
+document.addEventListener('DOMContentLoaded', function() {
+    const enlaces = document.querySelectorAll('.enlace');
+    
+    enlaces.forEach(enlace => {
+        enlace.addEventListener('click', function(e) {
+            if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('submenu')) {
+                enlaces.forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
